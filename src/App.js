@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { render } from '@testing-library/react';
+// import { render } from '@testing-library/react';
 
 let messages = [
     {
@@ -30,20 +30,15 @@ const current_name = "Bob";
 function App() {
     return (
         <div className="App">
-        <header>
-            
-        </header>
-        <section>
             <ChatRoom />
             <MessageBox />
-        </section>
         </div>
     );
 }
 
 function MessageBox() {
     return(
-        <form name="new-message">
+        <form name="new-message" className="new-message">
             <input type="text" className="message-box"></input>
             <button type="submit" className="send-button">
                 <span role="img" aria-label="rocket">
