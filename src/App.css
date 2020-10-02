@@ -39,6 +39,7 @@ body{
     position: relative;
     width: 100%;
     min-height: 55px;
+    clear: both;
 }
 
 .message{
@@ -49,8 +50,9 @@ body{
     flex-direction: column;
     padding: 5px 20px;
     background: #ffffff;
-    position: absolute;
+    /* position: absolute; */
     min-width: 30px;
+    max-width: 300px;
 }
 
 .message .sender{
@@ -65,13 +67,13 @@ body{
 
 .message.sent{
     background: #f4f4ff;
-    right: 0;
+    float: right;
     border-radius: 30px 5px 30px 30px;
     --message-sender-name-color : #494668;
 }
 
 .message.received{
-    left: 0;
+    float: left;
     border-radius: 5px 30px 30px 30px;
 }
 
