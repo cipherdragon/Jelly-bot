@@ -1,6 +1,6 @@
 ## This is Jelly-bot!
 
-Jelly-bot is a chatbot who talks about astronomy with you.
+Jelly-bot is a chatbot who talks about astronomy with you.<br />
 #spaceappscolombo
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
