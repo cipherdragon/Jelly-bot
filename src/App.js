@@ -1,6 +1,8 @@
-import React from 'react';
+// author: Adeepa Gunathilake
+
+import React, { useEffect } from 'react';
 import './App.css';
-// import { render } from '@testing-library/react';
+import { useState } from "react";
 
 let messages = [
     {
@@ -42,15 +44,29 @@ function App() {
     return (
         <div className="App">
             <ChatRoom />
-            <MessageBox />
+            <NewMessageBox />
         </div>
     );
 }
 
-function MessageBox() {
+function NewMessageBox() {
+    const [newMessage, setNewMessage] = useState('');
+
+    const sendNewMessage = (e) => {
+        e.preventDefault();
+
+        messages.push({
+            id : 10,
+            sender: current_name,
+            message: newMessage
+        });
+
+        setNewMessage('');
+        console.log("new messages!");
+    }
     return(
-        <form name="new-message" className="new-message" action="/#">
-            <input type="text" className="message-box"></input>
+        <form name="new-message" className="new-message" onSubmit={sendNewMessage}>
+            <input type="text" value={newMessage} className="message-box" onChange={(e) => setNewMessage(e.target.value)}></input>
             <button type="submit" className="send-button">
                 <span role="img" aria-label="rocket">
                     🚀
@@ -73,7 +89,6 @@ function ChatRoom() {
 function ChatMessage(props) {
     const { sender, message} = props.message;
     const messageClass = sender === current_name ? "sent" : "received";
-
     return(
         <div className="message-wrapper">
             <div className={`message ${messageClass}`}>
@@ -83,6 +98,5 @@ function ChatMessage(props) {
         </div>   
     )
 }
-
 
 export default App;
