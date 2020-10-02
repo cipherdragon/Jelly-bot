@@ -1,6 +1,8 @@
+/* author: Adeepa Gunathilake */
+
 :root{
     --message-sender-name-color : #6b6b6b;
-    --message-box-shadow-color : rgba(12, 12, 12, 0.26);
+    --message-box-shadow-color : rgba(12, 12, 12, 0.425);
 }
 
 body{
@@ -30,7 +32,7 @@ body{
     width: 100%;
     position: relative;
     padding: 10px;
-    border: 1px dashed rgb(197, 197, 197);
+    border: 1px dashed #adadad;
     box-sizing: border-box;
     flex-grow: 1;
     max-height: calc(100vh - 70px);
@@ -45,7 +47,7 @@ body{
 }
 
 .message{
-    box-shadow: 0 0 5px var(--message-box-shadow-color);
+    box-shadow: 0 0 3px var(--message-box-shadow-color);
     margin: 10px auto;
     border-radius: 30px;
     display: flex;
@@ -72,6 +74,7 @@ body{
     font-size: 12px;
     color: var(--message-sender-name-color);
     font-weight: bold;
+    margin-bottom: 3px;
 }
 
 .message .message-text{
