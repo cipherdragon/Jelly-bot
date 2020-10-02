@@ -26,7 +26,7 @@ let messages = [
     {
         "id" : 5,
         "sender" : "Bob",
-        "message" : "Again Bob here baby! this is a long long long long and loooonnng message. Let's see Adeepa's code render this."
+        "message" : "Again Bob here! this is a long long long long and loooonnng message. Let's see how my css render this."
     }
     ,
     {
