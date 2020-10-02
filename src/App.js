@@ -22,6 +22,17 @@ let messages = [
         "id" : 4,
         "sender" : "Bot",
         "message" : "I'm the bot!"
+    },
+    {
+        "id" : 5,
+        "sender" : "Bob",
+        "message" : "Again Bob here baby! this is a long long long long and loooonnng message. Let's see Adeepa's code render this."
+    }
+    ,
+    {
+        "id" : 6,
+        "sender" : "Bot",
+        "message" : "It is super bad. Add max-width for message and reduce font size too."
     }
 ]
 
