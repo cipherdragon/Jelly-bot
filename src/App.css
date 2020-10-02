@@ -76,6 +76,8 @@ body{
 
 .message .message-text{
     font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    color: #252525;
 }
 
 .message.sent{

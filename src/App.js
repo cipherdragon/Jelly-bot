@@ -49,7 +49,7 @@ function App() {
 
 function MessageBox() {
     return(
-        <form name="new-message" className="new-message">
+        <form name="new-message" className="new-message" action="/#">
             <input type="text" className="message-box"></input>
             <button type="submit" className="send-button">
                 <span role="img" aria-label="rocket">
