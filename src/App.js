@@ -97,17 +97,17 @@ function ChatRoom() {
 }
 
 function ChatMessage(props) {
-    const { sender, message} = props.message;
-    const messageClass = sender === current_name ? "sent" : "received";
+    const { name, text, uid} = props.message;
+    const messageClass = uid === currentUser.uid ? "sent" : "received";
+    
     return(
         <div className="message-wrapper">
             <div className={`message ${messageClass}`}>
-                <div className="sender">{sender}</div>
-                <div className="message-text">{message}</div>
+                <div className="sender">{name}</div>
+                <div className="message-text">{text}</div>
             </div>
         </div>   
-    )
+    );
 }
-
 
 export default App;
