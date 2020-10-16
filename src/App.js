@@ -16,7 +16,7 @@ const currentUser = {
     }
 }
 
-let messages = [
+let localMessageCache = [
     {
         "id" : 1,
         "sender" : "Alice",
@@ -92,7 +92,7 @@ function ChatMessageDisplay(props) {
         // Change local message cache when new messages arrived from server. 
         // Update the component by updating the messages state.
 
-        setMessages(messages);
+        setMessages(localMessageCache);
     }
 
     const dummy = useRef(null);
