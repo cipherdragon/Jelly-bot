@@ -53,8 +53,7 @@ let localMessageCache = [
 function App() {
     return (
         <div className="App">
-            <ChatMessageDisplay />
-            <NewMessageBox />
+            <ChatRoom />
         </div>
     );
 }
