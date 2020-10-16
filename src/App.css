@@ -1,42 +1,184 @@
 /* author: Adeepa Gunathilake */
 
 :root{
-    --message-sender-name-color : #6b6b6b;
+    --message-sender-name-color : #848cf8;
     --message-box-shadow-color : rgba(12, 12, 12, 0.425);
+    --message-text-color : #252525;
 }
 
 body{
     background: #f9f9fa;
     margin: 0;
-    overflow: hidden;
+    overflow-x: hidden;
     min-width: 230px;
 }
 
 .App {
     margin: 0 auto;
-    max-width: 720px;
-    background: #f9f9fa;
+    width: 100vw;
+    height: 100vh;
+
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    padding: 5px;
+    
     box-sizing: border-box;
     min-width: 230px;
+}
+
+.flex-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =================================================================== */
+/* ======================= Join or create room ======================= */
+/* =================================================================== */
+
+.JoinChatRoom-wrapper{
+    width: 100vw;
+    height: 100vh;
+}
+
+.JoinChatRoom {
+    font-family: 'Roboto', sans-serif;
+    color: #363636;
+    background-color: #fff;
+    width: max-content;
+    padding: 10px;
+    border: 1px dashed #508bf7;
+    border-radius: 10px;
+    position: relative;
+}
+
+.JoinChatRoomOverlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(2px);
+    opacity: 1;
+    animation: appear 1.5s;
+}
+
+@keyframes appear{
+    0% { opacity: 0; }
+    100% { opacity: 1;}
+}
+
+.JoinChatRoomOverlay .spinner{
+    width: 30px;
+    height: 30px;
+    background: none;
+    border: 7px solid #acbfff;
+    border-top-color: #587fff;
+    border-radius: 50%;
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin{
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+}
+
+.JoinChatRoom h1 {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.JoinChatRoom .data-field{
+    display: grid;
+    grid-template-columns: 100px 150px;
+    gap: 15px 5px;
+    align-items: center;
+    margin: 0 auto;
+    width: max-content;
+    margin-bottom: 20px;
+    color: #636363;
+}
+
+.JoinChatRoom .data-field input[type='text']{
+    border-radius: 20px;
+    padding: 5px 10px;
+    border: 1px solid #508bf7;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+}
+
+.JoinChatRoom .data-field input[type='text']{
+    outline: none;
+}
+
+.JoinChatRoom .SubmitButtonPanel{
+    display: flex;
+    width: max-content;
+    margin: 0 auto;
+}
+
+.JoinChatRoom .SubmitButtonPanel button{
+    border-radius: 1000px;
+    border-width: 0;
+    
+    padding: 5px 10px;
+    margin: 10px 0;
+    width: 120px;
+    
+    background-color: #668aff;
+    color: #fff;
+    box-shadow: 0 0 3px rgba(37, 37, 37, 0.568);
+
+    font-weight: 500;
+    font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
+
+    cursor: pointer;
+}
+
+.JoinChatRoom .SubmitButtonPanel button:focus{
+    outline: none;
+    background-color: #085af3;
+}
+
+.JoinChatRoom .SubmitButtonPanel button:first-child{
+    margin-right: 20px;
 }
 
 /* =================================================================== */
 /* =================== Chat Room and Chat messages =================== */
 /* =================================================================== */
 
+.ChatRoom-Wrapper{
+    width: 100vw;
+    height: 100vh;
+    background-color: #f0f5ff;
+}
+
 .ChatRoom{
     width: 100%;
-    position: relative;
-    padding: 10px;
-    border: 1px dashed #adadad;
+    max-width: 720px;
+    margin: 0 auto;
+    height: 100vh;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.ChatMessageDisplay{
+    width: 100%;
+    padding: 5px 10px;
+    border: 1px dashed #8bb9fa;
+    border-radius: 5px;
     box-sizing: border-box;
     flex-grow: 1;
-    max-height: calc(100vh - 70px);
+    max-height: calc(100vh - 100px);
     overflow: hidden auto;
+    background: #d6e7ff;
 }
 
 .message-wrapper{
@@ -47,15 +189,15 @@ body{
 }
 
 .message{
-    box-shadow: 0 0 3px var(--message-box-shadow-color);
-    margin: 10px auto;
+    margin: 3px auto;
     border-radius: 30px;
     display: flex;
     flex-direction: column;
     padding: 5px 20px;
-    background: #ffffff;
+    background: #fff;
     min-width: 30px;
     max-width: 300px;
+    word-wrap: break-word;
 }
 
 @media only screen and (max-width: 430px){
@@ -80,14 +222,15 @@ body{
 .message .message-text{
     font-family: 'Open Sans', sans-serif;
     font-size: 1rem;
-    color: #252525;
+    color: var(--message-text-color);
 }
 
 .message.sent{
-    background: #f4f4ff;
+    background: #6666ff;
     float: right;
     border-radius: 30px 5px 30px 30px;
-    --message-sender-name-color : #494668;
+    --message-sender-name-color : #f4f2ff;
+    --message-text-color : #fff;
 }
 
 .message.received{
@@ -108,11 +251,16 @@ body{
 .new-message .message-box{
     flex-grow: 1;
     border: 1px solid #d3d3d3;
+    background-color: #ffffff;
     border-radius: 20px;
     padding: 10px;
     font-size: 18px;
     font-family: 'Open Sans', sans-serif;
     min-width: 150px;
+}
+
+.new-message .message-box:focus{
+    outline: none;
 }
 
 .new-message .send-button{
@@ -121,5 +269,7 @@ body{
     padding: 12px;
     border: 1px solid #c9c9c9;
     margin: 0 0 0 5px;
-    background: #ffffff;
+    background: #fff;
+    box-shadow: 0 0 3px rgba(61, 61, 61, 0.493);
+    cursor: pointer;
 }
