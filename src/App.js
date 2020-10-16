@@ -59,7 +59,18 @@ function App() {
     );
 }
 
-function ChatMessageDisplay(props) {
+function ChatRoom() {
+    return(
+        <div className="ChatRoom-Wrapper">
+            <div className="ChatRoom">
+                <ChatMessageDisplay/> 
+                <NewMessageBox name={currentUser.name}/>
+            </div>
+        </div>
+    );
+}
+
+function ChatMessageDisplay() {
     const [messages, setMessages] = useState();
 
     const onMessagesChanged = () => {
