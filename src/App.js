@@ -59,6 +59,29 @@ function App() {
     );
 }
 
+function ChatMessageDisplay(props) {
+    const [messages, setMessages] = useState();
+
+    const onMessagesChanged = () => {
+        // TODO : Write the logic to update component when local message cache changed.
+        // Change local message cache when new messages arrived from server. 
+        // Update the component by updating the messages state.
+
+        setMessages(localMessageCache);
+    }
+
+    const dummy = useRef(null);
+
+    setTimeout(() => dummy.current && dummy.current.scrollIntoView({ behavior: 'smooth' }), 50);
+
+    return(
+        <div className="ChatMessageDisplay">
+            {messages && messages.map(msg =>  <ChatMessage message={msg} key={msg.id}/>)}
+            <span ref={dummy}></span>
+        </div>
+    )
+}
+
 function NewMessageBox() {
     const [newMessage, setNewMessage] = useState('');
 
@@ -81,29 +104,6 @@ function NewMessageBox() {
                 </span>
             </button>
         </form>
-    )
-}
-
-function ChatMessageDisplay(props) {
-    const [messages, setMessages] = useState();
-
-    const onMessagesChanged = () => {
-        // TODO : Write the logic to update component when local message cache changed.
-        // Change local message cache when new messages arrived from server. 
-        // Update the component by updating the messages state.
-
-        setMessages(localMessageCache);
-    }
-
-    const dummy = useRef(null);
-
-    setTimeout(() => dummy.current && dummy.current.scrollIntoView({ behavior: 'smooth' }), 50);
-
-    return(
-        <div className="ChatMessageDisplay">
-            {messages && messages.map(msg =>  <ChatMessage message={msg} key={msg.id}/>)}
-            <span ref={dummy}></span>
-        </div>
     )
 }
 
