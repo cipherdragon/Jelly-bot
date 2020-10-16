@@ -1,6 +1,6 @@
 // author: Adeepa Gunathilake
 
-import React from 'react';
+import React, { useRef } from 'react';
 import './App.css';
 import { useState } from "react";
 
@@ -84,12 +84,25 @@ function NewMessageBox() {
     )
 }
 
-function ChatMessageDisplay() {
+function ChatMessageDisplay(props) {
+    const [messages, setMessages] = useState();
+
+    const onMessagesChanged = () => {
+        // TODO : Write the logic to update component when local message cache changed.
+        // Change local message cache when new messages arrived from server. 
+        // Update the component by updating the messages state.
+
+        setMessages(messages);
+    }
+
+    const dummy = useRef(null);
+
+    setTimeout(() => dummy.current && dummy.current.scrollIntoView({ behavior: 'smooth' }), 50);
+
     return(
         <div className="ChatMessageDisplay">
-            {messages.map((msg) => {
-                return <ChatMessage message={msg} key={msg.id}/>
-            })}
+            {messages && messages.map(msg =>  <ChatMessage message={msg} key={msg.id}/>)}
+            <span ref={dummy}></span>
         </div>
     )
 }
