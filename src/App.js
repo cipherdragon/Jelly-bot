@@ -121,4 +121,12 @@ function ChatMessage(props) {
     );
 }
 
+// ============================================================================
+// ============================= Utility Functions ============================
+// ============================================================================
+
+function getNewMessages() {
+    // TODO : update local message cache listening to the server. 
+}
+
 export default App;
