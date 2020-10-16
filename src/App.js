@@ -52,18 +52,16 @@ function App() {
 function NewMessageBox() {
     const [newMessage, setNewMessage] = useState('');
 
-    const sendNewMessage = (e) => {
+    const sendNewMessage = async (e) => {
         e.preventDefault();
 
-        messages.push({
-            id : 10,
-            sender: current_name,
-            message: newMessage
-        });
+        if(newMessage === '') return;
 
+        // TODO : Write the logic to send new message to the server (messageDB)
+        
         setNewMessage('');
-        console.log("new messages!");
     }
+
     return(
         <form name="new-message" className="new-message" onSubmit={sendNewMessage}>
             <input type="text" value={newMessage} className="message-box" onChange={(e) => setNewMessage(e.target.value)}></input>
