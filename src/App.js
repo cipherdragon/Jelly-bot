@@ -4,6 +4,18 @@ import React from 'react';
 import './App.css';
 import { useState } from "react";
 
+// currentUser object contains data about the user who use this react app in the
+// browser currently. Name is hardcoded currently.
+const currentUser = {
+    name: 'Bob',
+    uid : () => {
+        // TODO : Write the logic to generate a user id. 
+        // I prefer using firebase().auth().currentUser.uid but this project isn't using firebase.
+        // So have to do a workaround.
+        return Math.random() * 1000;
+    }
+}
+
 let messages = [
     {
         "id" : 1,
@@ -96,5 +108,6 @@ function ChatMessage(props) {
         </div>   
     )
 }
+
 
 export default App;
