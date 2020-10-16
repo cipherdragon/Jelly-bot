@@ -50,8 +50,6 @@ let messages = [
     }
 ]
 
-const current_name = "Bob";
-
 function App() {
     return (
         <div className="App">
