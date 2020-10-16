@@ -53,7 +53,7 @@ let messages = [
 function App() {
     return (
         <div className="App">
-            <ChatRoom />
+            <ChatMessageDisplay />
             <NewMessageBox />
         </div>
     );
@@ -84,9 +84,9 @@ function NewMessageBox() {
     )
 }
 
-function ChatRoom() {
+function ChatMessageDisplay() {
     return(
-        <div className="ChatRoom">
+        <div className="ChatMessageDisplay">
             {messages.map((msg) => {
                 return <ChatMessage message={msg} key={msg.id}/>
             })}
