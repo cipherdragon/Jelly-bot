@@ -55,6 +55,13 @@ const messageStream = new Subject();
 const localMessageCache = [];
 
 function App() {
+
+    setTimeout(() => {
+        hardcodedMessages.forEach(element => {
+            messageStream.next(element);
+        })
+    }, 2000)
+
     return (
         <div className="App">
             <ChatRoom />
@@ -67,7 +74,8 @@ function ChatRoom() {
     
     messageStream.subscribe(message => {
         addToLocalCache(message);
-        setMessages({messages: localMessageCache})
+        setTimeout(() => setMessages({messages: localMessageCache}), 100)
+        console.log(localMessageCache);
     });
 
     return(
