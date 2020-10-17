@@ -103,10 +103,10 @@ function NewMessageBox() {
         if(newMessage === '') return;
         
         const message = {
+            id: generateMessageID(getServerTimestamp()),
             uid: currentUser.uid,
             name: currentUser.name,
             text: newMessage,
-            createdAt : getServerTimestamp()
         }
         sendMessage(JSON.stringify(message));
         setNewMessage('');
@@ -150,12 +150,19 @@ function addToLocalCache(message) {
     const lastMessage = localMessageCache[length - 1];
 
     const isDuplicate = () => {
-        return message.createdAt === (lastMessage && lastMessage.createdAt);
+        return message.id === (lastMessage && lastMessage.id);
     }
 
     if (isDuplicate()) return;
 
     localMessageCache.push(message);
+}
+
+// following function returns a ID for a message. Since a user can't send more than
+// one message in the same millisecond, a combination of uid and createdAt gives a
+// fairly unique message id. 
+function generateMessageID(createdAt) {
+    return createdAt + currentUser.uid.toString();
 }
 
 // functions below this line are utility functions used to communicate with server.
