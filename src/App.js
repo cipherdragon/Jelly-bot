@@ -144,8 +144,17 @@ function ChatMessage(props) {
 // ============================= Utility Functions ============================
 // ============================================================================
 
+// functions below this line are just utility functions used by front end code.
+// better don't touch them.
+
+function addToLocalCache(message) {
+    localMessageCache.push(message);
+}
+
+// functions below this line are utility functions used to communicate with server.
+
 function getNewMessages() {
-    // TODO : update local message cache listening to the server. 
+    // TODO : listen to server and get new messages, stream them with messageStream. 
 }
 
 function sendMessage(message) {
