@@ -165,4 +165,11 @@ function sendMessage(message) {
     // TODO : Add the code to send new messages to the server here.
 }
 
+function getServerTimestamp() {
+    // TODO : This function should have a method to return timestamp from server.
+    // Currently I'm issuing a timestamp from client side.
+
+    return (new Date()).getMilliseconds();
+}
+
 export default App;
