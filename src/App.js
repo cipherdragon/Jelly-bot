@@ -56,11 +56,11 @@ const localMessageCache = [];
 
 function App() {
 
-    setTimeout(() => {
+    /* setTimeout(() => {
         hardcodedMessages.forEach(element => {
             messageStream.next(element);
         })
-    }, 2000)
+    }, 2000) */
 
     return (
         <div className="App">
@@ -74,7 +74,7 @@ function ChatRoom() {
     
     messageStream.subscribe(message => {
         addToLocalCache(message);
-        setTimeout(() => setMessages({messages: localMessageCache}), 100)
+        setTimeout(() => setMessages({messages: localMessageCache}), 100) //setTimeout is used to prevent bouncing.
         console.log(localMessageCache);
     });
 
@@ -112,7 +112,8 @@ function NewMessageBox() {
         const message = {
             uid: currentUser.uid,
             name: currentUser.name,
-            text: newMessage
+            text: newMessage,
+            createdAt : getServerTimestamp()
         }
         sendMessage(JSON.stringify(message));
         setNewMessage('');
@@ -152,6 +153,15 @@ function ChatMessage(props) {
 // better don't touch them.
 
 function addToLocalCache(message) {
+    const length = localMessageCache.length;
+    const lastMessage = localMessageCache[length - 1];
+
+    const isDuplicate = () => {
+        return message.createdAt === (lastMessage && lastMessage.createdAt);
+    }
+
+    if (isDuplicate()) return;
+
     localMessageCache.push(message);
 }
 
@@ -163,13 +173,15 @@ function getNewMessages() {
 
 function sendMessage(message) {
     // TODO : Add the code to send new messages to the server here.
+
+    messageStream.next(JSON.parse(message))
 }
 
 function getServerTimestamp() {
     // TODO : This function should have a method to return timestamp from server.
     // Currently I'm issuing a timestamp from client side.
 
-    return (new Date()).getMilliseconds();
+    return (new Date()).toISOString();
 }
 
 export default App;
