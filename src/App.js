@@ -52,7 +52,7 @@ const hardcodedMessages = [
 ]
 
 const messageStream = new Subject();
-const localMessageCache = new Array();
+const localMessageCache = [];
 
 function App() {
     return (
@@ -66,12 +66,8 @@ function ChatRoom() {
     const [messages, setMessages] = useState({messages: []})
     
     messageStream.subscribe(message => {
-        let messages_tmp = [];
-        messages.messages.forEach(element => {
-            messages_tmp.push(element);
-        });
-        messages_tmp.push(message)
-        setMessages({messages: messages_tmp})
+        addToLocalCache(message);
+        setMessages({messages: localMessageCache})
     });
 
     return(
