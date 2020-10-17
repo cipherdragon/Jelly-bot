@@ -144,4 +144,8 @@ function getNewMessages() {
     // TODO : update local message cache listening to the server. 
 }
 
+function sendMessage(message) {
+    // TODO : Add the code to send new messages to the server here.
+}
+
 export default App;
