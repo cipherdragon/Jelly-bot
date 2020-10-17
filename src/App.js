@@ -55,13 +55,6 @@ const messageStream = new Subject();
 const localMessageCache = [];
 
 function App() {
-
-    /* setTimeout(() => {
-        hardcodedMessages.forEach(element => {
-            messageStream.next(element);
-        })
-    }, 2000) */
-
     return (
         <div className="App">
             <ChatRoom />
@@ -166,14 +159,16 @@ function addToLocalCache(message) {
 }
 
 // functions below this line are utility functions used to communicate with server.
+// Implement them appropriately.
 
 function getNewMessages() {
     // TODO : listen to server and get new messages, stream them with messageStream. 
+    // Remember to parse the JSON message before streaming through messageStream.
 }
 
 function sendMessage(message) {
     // TODO : Add the code to send new messages to the server here.
-
+    // Used the following line just for testing.
     messageStream.next(JSON.parse(message))
 }
 
