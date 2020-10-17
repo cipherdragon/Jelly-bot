@@ -3,6 +3,7 @@
 import React, { useRef } from 'react';
 import './App.css';
 import { useState } from "react";
+import { Subject } from "rxjs";
 
 // currentUser object contains data about the user who use this react app in the
 // browser currently. Name is hardcoded currently.
@@ -18,37 +19,39 @@ const currentUser = {
 
 let localMessageCache = [
     {
-        "id" : 1,
-        "sender" : "Alice",
-        "message" : "Hi!"
+        "uid" : 1,
+        "name" : "Alice",
+        "text" : "Hi!"
     },
     {
-        "id" : 2,
-        "sender" : "Alice",
-        "message" : "Hi there!"
+        "uid" : 2,
+        "name" : "Alice",
+        "text" : "Hi there!"
     },
     {
-        "id" : 3,
-        "sender" : "Bob",
-        "message" : "Hi!"
+        "uid" : currentUser.uid,
+        "name" : "Bob",
+        "text" : "Hi!"
     },
     {
-        "id" : 4,
-        "sender" : "Bot",
-        "message" : "I'm the bot!"
+        "uid" : 4,
+        "name" : "Bot",
+        "text" : "I'm the bot!"
     },
     {
-        "id" : 5,
-        "sender" : "Bob",
-        "message" : "Again Bob here! this is a long long long long and loooonnng message. Let's see how my css render this."
+        "uid" : currentUser.uid,
+        "name" : "Bob",
+        "text" : "Again Bob here! this is a long long long long and loooonnng message. Let's see how my css render this."
     }
     ,
     {
-        "id" : 6,
-        "sender" : "Bot",
-        "message" : "It is super bad. Add max-width for message and reduce font size too."
+        "uid" : 6,
+        "name" : "Bot",
+        "text" : "It is super bad. Add max-width for message and reduce font size too."
     }
 ]
+
+const messageCache = new Subject();
 
 function App() {
     return (
@@ -59,10 +62,21 @@ function App() {
 }
 
 function ChatRoom() {
+    const [messages, setMessages] = useState({messages: []})
+    
+    messageCache.subscribe(message => {
+        let messages_tmp = [];
+        messages.messages.forEach(element => {
+            messages_tmp.push(element);
+        });
+        messages_tmp.push(message)
+        setMessages({messages: messages_tmp})
+    });
+
     return(
         <div className="ChatRoom-Wrapper">
             <div className="ChatRoom">
-                <ChatMessageDisplay/> 
+                <ChatMessageDisplay messages={messages.messages}/> 
                 <NewMessageBox name={currentUser.name}/>
             </div>
         </div>
@@ -74,7 +88,6 @@ function ChatMessageDisplay(props) {
     const dummy = useRef(null);
 
     setTimeout(() => dummy.current && dummy.current.scrollIntoView({ behavior: 'smooth' }), 50);
-    console.log(messages);
     return(
         <div className="ChatMessageDisplay">
             {messages && messages.map(msg =>  <ChatMessage message={msg} key={msg.id}/>)}
