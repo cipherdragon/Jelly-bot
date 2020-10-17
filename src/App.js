@@ -51,7 +51,7 @@ let localMessageCache = [
     }
 ]
 
-const messageCache = new Subject();
+const messageStream = new Subject();
 
 function App() {
     return (
@@ -64,7 +64,7 @@ function App() {
 function ChatRoom() {
     const [messages, setMessages] = useState({messages: []})
     
-    messageCache.subscribe(message => {
+    messageStream.subscribe(message => {
         let messages_tmp = [];
         messages.messages.forEach(element => {
             messages_tmp.push(element);
