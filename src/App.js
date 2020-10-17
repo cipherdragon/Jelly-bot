@@ -52,6 +52,7 @@ const hardcodedMessages = [
 ]
 
 const messageStream = new Subject();
+const localMessageCache = new Array();
 
 function App() {
     return (
