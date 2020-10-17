@@ -17,7 +17,7 @@ const currentUser = {
     }
 }
 
-let localMessageCache = [
+const hardcodedMessages = [
     {
         "uid" : 1,
         "name" : "Alice",
