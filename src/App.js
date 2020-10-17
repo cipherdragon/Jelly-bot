@@ -104,9 +104,13 @@ function NewMessageBox() {
         e.preventDefault();
 
         if(newMessage === '') return;
-
-        // TODO : Write the logic to send new message to the server (messageDB)
         
+        const message = {
+            uid: currentUser.uid,
+            name: currentUser.name,
+            text: newMessage
+        }
+        sendMessage(JSON.stringify(message));
         setNewMessage('');
     }
 
