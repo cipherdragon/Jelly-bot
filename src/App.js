@@ -9,12 +9,12 @@ import { Subject } from "rxjs";
 // browser currently. Name is hardcoded currently.
 const currentUser = {
     name: 'Bob',
-    uid : () => {
+    uid : (() => {
         // TODO : Write the logic to generate a user id. 
         // I prefer using firebase().auth().currentUser.uid but this project isn't using firebase.
         // So have to do a workaround.
-        return Math.random() * 1000;
-    }
+        return (Math.random() * 100000).toFixed(0);
+    })()
 }
 
 const hardcodedMessages = [
