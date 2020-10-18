@@ -1,5 +1,7 @@
 // author: Adeepa Gunathilake
 
+// ============================================
+
 import React, { useRef } from 'react';
 import './App.css';
 import { useState } from "react";
@@ -17,44 +19,56 @@ const currentUser = {
     })()
 }
 
-const hardcodedMessages = [
-    {
-        "uid" : 1,
-        "name" : "Alice",
-        "text" : "Hi!"
-    },
-    {
-        "uid" : 2,
-        "name" : "Alice",
-        "text" : "Hi there!"
-    },
-    {
-        "uid" : currentUser.uid,
-        "name" : "Bob",
-        "text" : "Hi!"
-    },
-    {
-        "uid" : 4,
-        "name" : "Bot",
-        "text" : "I'm the bot!"
-    },
-    {
-        "uid" : currentUser.uid,
-        "name" : "Bob",
-        "text" : "Again Bob here! this is a long long long long and loooonnng message. Let's see how my css render this."
-    }
-    ,
-    {
-        "uid" : 6,
-        "name" : "Bot",
-        "text" : "It is super bad. Add max-width for message and reduce font size too."
-    }
-]
+// const hardcodedMessages = [
+//     {
+//         "id" : 1,
+//         "uid" : 1,
+//         "name" : "Alice",
+//         "text" : "Hi!"
+//     },
+//     {
+//         "id" : 2,
+//         "uid" : 1,
+//         "name" : "Alice",
+//         "text" : "Hi there!"
+//     },
+//     {
+//         "id" : 3,
+//         "uid" : currentUser.uid,
+//         "name" : "Bob",
+//         "text" : "Hi!"
+//     },
+//     {
+//         "id" : 4,
+//         "uid" : 4,
+//         "name" : "Bot",
+//         "text" : "I'm the bot!"
+//     },
+//     {
+//         "id" : 5,
+//         "uid" : currentUser.uid,
+//         "name" : "Bob",
+//         "text" : "Again Bob here! this is a long long long long and loooonnng message. Let's see how my css render this."
+//     }
+//     ,
+//     {
+//         "id" : 6,
+//         "uid" : 4,
+//         "name" : "Bot",
+//         "text" : "It is super bad. Add max-width for message and reduce font size too."
+//     }
+// ]
 
 const messageStream = new Subject();
 const localMessageCache = [];
 
 function App() {
+    // setTimeout(() => {
+    //     hardcodedMessages.forEach(element => {
+    //         messageStream.next(element)
+    //     });
+    // })
+
     return (
         <div className="App">
             <ChatRoom />
@@ -63,18 +77,18 @@ function App() {
 }
 
 function ChatRoom() {
-    const [messages, setMessages] = useState({messages: []})
+    const [updateState, toggleUpdate] = useState(false);
+    const reRender = () => toggleUpdate(!updateState);
     
     messageStream.subscribe(message => {
         addToLocalCache(message);
-        setTimeout(() => setMessages({messages: localMessageCache}), 100) //setTimeout is used to prevent bouncing.
-        console.log(localMessageCache);
+        setTimeout(reRender, 100) //setTimeout is used to prevent bouncing.
     });
 
     return(
         <div className="ChatRoom-Wrapper">
             <div className="ChatRoom">
-                <ChatMessageDisplay messages={messages.messages}/> 
+                <ChatMessageDisplay messages={localMessageCache}/> 
                 <NewMessageBox name={currentUser.name}/>
             </div>
         </div>
