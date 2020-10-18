@@ -86,7 +86,7 @@ function App() {
 }
 
 function ChatRoom() {
-    // Note : this component is re-rendering at super high rates.
+    // Note : ☠☠☠ this component is re-rendering at super high rates☠☠☠
     const [updateState, toggleUpdate] = useState(false);
     const reRender = () => toggleUpdate(!updateState);
     
