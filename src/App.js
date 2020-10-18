@@ -178,12 +178,15 @@ function addToLocalCache(message) {
         return message.id === (lastMessage && lastMessage.id);
     }
 
-    const removeExcessMessages = (maximumCacheLimit) => localMessageCache.splice(0, cacheLength - maximumCacheLimit);
-
     if (isDuplicate()) return;
 
     localMessageCache.push(message);
-    removeExcessMessages(10);
+    removeExcessMessages();
+}
+
+function removeExcessMessages(maximumCacheLimit=50) {
+    const cacheLength = localMessageCache.length;
+    localMessageCache.splice(0, cacheLength - maximumCacheLimit);
 }
 
 function generateHashCode(input){
