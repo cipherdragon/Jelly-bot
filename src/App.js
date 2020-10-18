@@ -19,55 +19,55 @@ const currentUser = {
     })()
 }
 
-// const hardcodedMessages = [
-//     {
-//         "id" : 1,
-//         "uid" : 1,
-//         "name" : "Alice",
-//         "text" : "Hi!"
-//     },
-//     {
-//         "id" : 2,
-//         "uid" : 1,
-//         "name" : "Alice",
-//         "text" : "Hi there!"
-//     },
-//     {
-//         "id" : 3,
-//         "uid" : currentUser.uid,
-//         "name" : "Bob",
-//         "text" : "Hi!"
-//     },
-//     {
-//         "id" : 4,
-//         "uid" : 4,
-//         "name" : "Bot",
-//         "text" : "I'm the bot!"
-//     },
-//     {
-//         "id" : 5,
-//         "uid" : currentUser.uid,
-//         "name" : "Bob",
-//         "text" : "Again Bob here! this is a long long long long and loooonnng message. Let's see how my css render this."
-//     }
-//     ,
-//     {
-//         "id" : 6,
-//         "uid" : 4,
-//         "name" : "Bot",
-//         "text" : "It is super bad. Add max-width for message and reduce font size too."
-//     }
-// ]
+const hardcodedMessages = [
+    {
+        "id" : 1,
+        "uid" : 1,
+        "name" : "Alice",
+        "text" : "Hi!"
+    },
+    {
+        "id" : 2,
+        "uid" : 1,
+        "name" : "Alice",
+        "text" : "Hi there!"
+    },
+    {
+        "id" : 3,
+        "uid" : currentUser.uid,
+        "name" : "Bob",
+        "text" : "Hi!"
+    },
+    {
+        "id" : 4,
+        "uid" : 4,
+        "name" : "Bot",
+        "text" : "I'm the bot!"
+    },
+    {
+        "id" : 5,
+        "uid" : currentUser.uid,
+        "name" : "Bob",
+        "text" : "Again Bob here! this is a long long long long and loooonnng message. Let's see how my css render this."
+    }
+    ,
+    {
+        "id" : 6,
+        "uid" : 4,
+        "name" : "Bot",
+        "text" : "It is super bad. Add max-width for message and reduce font size too."
+    }
+]
 
 const messageStream = new Subject();
 const localMessageCache = [];
 
 function App() {
-    // setTimeout(() => {
-    //     hardcodedMessages.forEach(element => {
-    //         messageStream.next(element)
-    //     });
-    // })
+    setTimeout(() => {
+        hardcodedMessages.forEach(element => {
+            messageStream.next(element)
+        });
+    })
 
     return (
         <div className="App">
@@ -99,7 +99,8 @@ function ChatMessageDisplay(props) {
     const messages = props.messages;
     const dummy = useRef(null);
 
-    setTimeout(() => dummy.current && dummy.current.scrollIntoView({ behavior: 'smooth' }), 50);
+    dummy.current && dummy.current.scrollIntoView({ behavior: 'smooth' });
+
     return(
         <div className="ChatMessageDisplay">
             {messages && messages.map(msg =>  <ChatMessage message={msg} key={msg.id}/>)}
@@ -160,23 +161,32 @@ function ChatMessage(props) {
 // better don't touch them.
 
 function addToLocalCache(message) {
-    const length = localMessageCache.length;
-    const lastMessage = localMessageCache[length - 1];
+    const cacheLength = localMessageCache.length;
+    const lastMessage = localMessageCache[cacheLength - 1];
 
     const isDuplicate = () => {
         return message.id === (lastMessage && lastMessage.id);
     }
 
+    const removeExcessMessages = (maximumCacheLimit) => localMessageCache.splice(0, cacheLength - maximumCacheLimit);
+
     if (isDuplicate()) return;
 
     localMessageCache.push(message);
+    removeExcessMessages(10);
+}
+
+function generateHashCode(input){
+    // This function is directly copied from stackoverflow
+    // https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript
+    return input.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);              
 }
 
 // following function returns a ID for a message. Since a user can't send more than
 // one message in the same millisecond, a combination of uid and createdAt gives a
 // fairly unique message id. 
 function generateMessageID(createdAt) {
-    return createdAt + currentUser.uid.toString();
+    return generateHashCode(createdAt + currentUser.uid.toString());
 }
 
 // functions below this line are utility functions used to communicate with server.
