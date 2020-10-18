@@ -6,6 +6,7 @@ import React, { useRef } from 'react';
 import './App.css';
 import { useState } from "react";
 import { Subject } from "rxjs";
+import { throttleTime } from "rxjs/operators";
 
 // currentUser object contains data about the user who use this react app in the
 // browser currently. Name is hardcoded currently.
@@ -19,55 +20,56 @@ const currentUser = {
     })()
 }
 
-const hardcodedMessages = [
-    {
-        "id" : 1,
-        "uid" : 1,
-        "name" : "Alice",
-        "text" : "Hi!"
-    },
-    {
-        "id" : 2,
-        "uid" : 1,
-        "name" : "Alice",
-        "text" : "Hi there!"
-    },
-    {
-        "id" : 3,
-        "uid" : currentUser.uid,
-        "name" : "Bob",
-        "text" : "Hi!"
-    },
-    {
-        "id" : 4,
-        "uid" : 4,
-        "name" : "Bot",
-        "text" : "I'm the bot!"
-    },
-    {
-        "id" : 5,
-        "uid" : currentUser.uid,
-        "name" : "Bob",
-        "text" : "Again Bob here! this is a long long long long and loooonnng message. Let's see how my css render this."
-    }
-    ,
-    {
-        "id" : 6,
-        "uid" : 4,
-        "name" : "Bot",
-        "text" : "It is super bad. Add max-width for message and reduce font size too."
-    }
-]
+// const hardcodedMessages = [
+//     {
+//         "id" : 1,
+//         "uid" : 1,
+//         "name" : "Alice",
+//         "text" : "Hi!"
+//     },
+//     {
+//         "id" : 2,
+//         "uid" : 1,
+//         "name" : "Alice",
+//         "text" : "Hi there!"
+//     },
+//     {
+//         "id" : 3,
+//         "uid" : currentUser.uid,
+//         "name" : "Bob",
+//         "text" : "Hi!"
+//     },
+//     {
+//         "id" : 4,
+//         "uid" : 4,
+//         "name" : "Bot",
+//         "text" : "I'm the bot!"
+//     },
+//     {
+//         "id" : 5,
+//         "uid" : currentUser.uid,
+//         "name" : "Bob",
+//         "text" : "Again Bob here! this is a long long long long and loooonnng message. Let's see how my css render this."
+//     }
+//     ,
+//     {
+//         "id" : 6,
+//         "uid" : 4,
+//         "name" : "Bot",
+//         "text" : "It is super bad. Add max-width for message and reduce font size too."
+//     }
+// ]
 
 const messageStream = new Subject();
+const messageStreamListener = messageStream.pipe(throttleTime(100));
 const localMessageCache = [];
 
 function App() {
-    setTimeout(() => {
-        hardcodedMessages.forEach(element => {
-            messageStream.next(element)
-        });
-    })
+    // setTimeout(() => {
+    //     hardcodedMessages.forEach(element => {
+    //         messageStream.next(element)
+    //     });
+    // })
 
     return (
         <div className="App">
@@ -77,13 +79,16 @@ function App() {
 }
 
 function ChatRoom() {
+    // Note : this component is re-rendering at super high rates.
     const [updateState, toggleUpdate] = useState(false);
     const reRender = () => toggleUpdate(!updateState);
     
-    messageStream.subscribe(message => {
+    const updateNewMessages = (message) => {
         addToLocalCache(message);
-        setTimeout(reRender, 100) //setTimeout is used to prevent bouncing.
-    });
+        reRender();
+    }
+    
+    messageStreamListener.subscribe(updateNewMessages);
 
     return(
         <div className="ChatRoom-Wrapper">
@@ -99,8 +104,10 @@ function ChatMessageDisplay(props) {
     const messages = props.messages;
     const dummy = useRef(null);
 
-    dummy.current && dummy.current.scrollIntoView({ behavior: 'smooth' });
-
+    // For loop ensures that the scrolling only occurs once per re-render.
+    for (let i = 0; i < 1; i++)
+        dummy.current && dummy.current.scrollIntoView({ behavior: 'smooth' });
+        
     return(
         <div className="ChatMessageDisplay">
             {messages && messages.map(msg =>  <ChatMessage message={msg} key={msg.id}/>)}
@@ -158,7 +165,6 @@ function ChatMessage(props) {
 // ============================================================================
 
 // functions below this line are just utility functions used by front end code.
-// better don't touch them.
 
 function addToLocalCache(message) {
     const cacheLength = localMessageCache.length;
@@ -194,6 +200,7 @@ function generateMessageID(createdAt) {
 
 function getNewMessages() {
     // TODO : listen to server and get new messages, stream them with messageStream. 
+    // Use server sent events or other method to trigger this,
     // Remember to parse the JSON message before streaming through messageStream.
 }
 
