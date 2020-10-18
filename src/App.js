@@ -2,8 +2,11 @@
 
 /* 
 ==========================================================================================
-Uncomment from 23 to 34 and 34 to 34 to test this. Implement functions below line 202.
-Do a proper workaround to create the object currentUser properly. Name is the client name.
+Uncomment from 30 to 68 and 75 to 79 to test this. Implement functions below line 206.
+Do a proper workaround to create the object currentUser (line 20) properly. Name is the client name.
+
+A message object should have id(a unique id), uid(user id of the sender), name(sender's name),
+text(contents of the message).
 ==========================================================================================
 */
 import React, { useRef } from 'react';
