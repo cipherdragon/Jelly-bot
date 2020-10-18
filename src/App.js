@@ -1,7 +1,11 @@
 // author: Adeepa Gunathilake
 
-// ============================================
-
+/* 
+==========================================================================================
+Uncomment from 23 to 34 and 34 to 34 to test this. Implement functions below line 202.
+Do a proper workaround to create the object currentUser properly. Name is the client name.
+==========================================================================================
+*/
 import React, { useRef } from 'react';
 import './App.css';
 import { useState } from "react";
